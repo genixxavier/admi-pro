@@ -12,6 +12,10 @@ dbConnection();
 
 app.use('/api/users', require('./routes/user'));
 app.use('/api/login', require('./routes/auth'));
+app.use('/api/hospitals', require('./routes/hospitals'));
+app.use('/api/doctors', require('./routes/doctors'));
+app.use('/api/searches', require('./routes/searches'));
+app.use('/api/uploads', require('./routes/uploads'));
 
 app.listen( process.env.PORT || 4000,() => {
     console.log("Run server")
