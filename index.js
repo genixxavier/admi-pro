@@ -5,6 +5,8 @@ const cors = require('cors');
 
 const app = express();
 app.use(cors());
+//folder public
+app.use(express.static('public'))
 //lectura y parseo del body
 app.use(express.json())
 
