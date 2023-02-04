@@ -35,13 +35,31 @@ const createDoctor = async(req, res= response)=>{
 }
 
 const updateDoctor = async(req, res= response) => {
-    const uid = req.params.id
+    const id = req.params.id
+    const uid = req.uid
 
     try {
+        const doctor = await Doctors.findById(id);
+        if(!doctor){
+            return res.status(404).json({
+                ok: true,
+                msg: 'Doctor not found'
+            })
+        }
 
-        res.status(200).json({
+        const changeDoctor = {
+            ...req.body,
+            user: uid
+        }
+
+        const updateDoctor = await Doctors.findByIdAndUpdate(id, changeDoctor, { new: true})
+
+        res.status(201).json({
             ok: true,
+            msg: 'Doctor updated',
+            doctor: updateDoctor
         })
+
         
     } catch (error) {
         console.log(error);
@@ -53,12 +71,24 @@ const updateDoctor = async(req, res= response) => {
 }
 
 const deleteDoctor = async(req, res= response)=>{
-    const uid = req.params.id
+    const id = req.params.id
 
     try {
-        res.status(200).json({
+        const doctor = await Doctors.findById(id);
+        if(!doctor){
+            return res.status(404).json({
+                ok: true,
+                msg: 'Doctor not found'
+            })
+        }
+
+        await Doctors.findByIdAndDelete(id)
+
+        res.status(201).json({
             ok: true,
+            msg: 'Doctor delete',
         })
+
 
     } catch (error) {
         console.log(error);

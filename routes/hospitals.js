@@ -14,7 +14,11 @@ router.post("/", [
     validFields
 ], createHospital)
 
-router.put("/:id", [validateKWT],updateHospital)
+router.put("/:id", [
+    validateKWT,
+    check('name', 'The name hospital is required').not().isEmpty(),
+    validFields
+],updateHospital)
 
 
 router.delete("/:id", validateKWT,deleteHospital)

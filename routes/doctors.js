@@ -16,7 +16,13 @@ router.post("/", [
     validFields
 ], createDoctor)
 
-router.put("/:id", [validateKWT],updateDoctor)
+router.put("/:id", [
+    validateKWT,
+    check('name','Required name').not().isEmpty(),
+    check('hospital','Required hospital').not().isEmpty(),
+    check('hospital','Id hospital isn\'t valid').isMongoId(),
+    validFields
+],updateDoctor)
 
 
 router.delete("/:id", validateKWT,deleteDoctor) 
